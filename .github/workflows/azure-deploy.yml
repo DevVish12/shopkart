@@ -1,0 +1,39 @@
+name: Deploy backend to Azure App Service
+
+# Deploys backend/ to the Azure Web App on every push to main.
+# Required GitHub secrets (repo Settings → Secrets and variables → Actions):
+#   AZURE_WEBAPP_NAME             – the Web App name from the Azure portal
+#   AZURE_WEBAPP_PUBLISH_PROFILE  – paste the downloaded publish profile XML
+# Azure portal → Web App → Configuration → Application settings must contain:
+#   DB_HOST, DB_PORT=4000, DB_USER, DB_PASSWORD, DB_NAME=ecommerce, DB_SSL=true,
+#   JWT_SECRET, NODE_ENV=production, FRONTEND_URL=*
+# Also set: Configuration → General settings → Startup Command = "npm start",
+# and turn Web sockets ON.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'backend/**'
+      - '.github/workflows/azure-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install backend dependencies
+        run: npm --prefix backend install --no-audit --no-fund
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: backend

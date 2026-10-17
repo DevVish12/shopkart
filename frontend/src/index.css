@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Global theme: one variable set drives every brand-* utility ----------
+   Change [data-theme] on <html> (Admin → Settings → Theme) and the entire
+   site + admin panel re-theme instantly. Values are RGB triplets. */
+:root,
+[data-theme='green'] {
+  --brand-50: 240 253 244;
+  --brand-100: 220 252 231;
+  --brand-200: 187 247 208;
+  --brand-300: 134 239 172;
+  --brand-400: 74 222 128;
+  --brand-500: 34 197 94;
+  --brand-600: 22 163 74;
+  --brand-700: 21 128 61;
+  --brand-800: 22 101 52;
+  --brand-900: 20 83 45;
+  --brand-950: 5 46 22;
+}
+[data-theme='blue'] {
+  --brand-50: 238 244 255;
+  --brand-100: 219 231 254;
+  --brand-200: 191 211 254;
+  --brand-300: 147 180 253;
+  --brand-400: 96 141 250;
+  --brand-500: 59 103 246;
+  --brand-600: 37 73 235;
+  --brand-700: 29 58 216;
+  --brand-800: 30 50 175;
+  --brand-900: 30 47 138;
+  --brand-950: 23 32 84;
+}
+[data-theme='orange'] {
+  --brand-50: 255 247 237;
+  --brand-100: 255 237 213;
+  --brand-200: 254 215 170;
+  --brand-300: 253 186 116;
+  --brand-400: 251 146 60;
+  --brand-500: 249 115 22;
+  --brand-600: 234 88 12;
+  --brand-700: 194 65 12;
+  --brand-800: 154 52 18;
+  --brand-900: 124 45 18;
+  --brand-950: 67 20 7;
+}
+[data-theme='purple'] {
+  --brand-50: 250 245 255;
+  --brand-100: 243 232 255;
+  --brand-200: 233 213 255;
+  --brand-300: 216 180 254;
+  --brand-400: 192 132 252;
+  --brand-500: 168 85 247;
+  --brand-600: 147 51 234;
+  --brand-700: 126 34 206;
+  --brand-800: 107 33 168;
+  --brand-900: 88 28 135;
+  --brand-950: 59 7 100;
+}
+[data-theme='rose'] {
+  --brand-50: 255 241 242;
+  --brand-100: 255 228 230;
+  --brand-200: 254 205 211;
+  --brand-300: 253 164 175;
+  --brand-400: 251 113 133;
+  --brand-500: 244 63 94;
+  --brand-600: 225 29 72;
+  --brand-700: 190 18 60;
+  --brand-800: 159 18 57;
+  --brand-900: 136 19 55;
+  --brand-950: 76 5 25;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-2xl shadow-card border border-sk-mist-2/60;
+  }
+  .input {
+    @apply w-full rounded-xl border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-sk-primary focus:ring-2 focus:ring-sk-mist-3 disabled:bg-gray-100 disabled:text-gray-500;
+  }
+  .label {
+    @apply block text-sm font-medium text-gray-700 mb-1.5;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed select-none;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+  }
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-800 hover:bg-gray-200;
+  }
+  .btn-outline {
+    @apply btn border border-gray-300 bg-white text-gray-800 hover:bg-gray-50;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-700;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .table-wrap {
+    @apply overflow-x-auto rounded-2xl border border-slate-200/70 bg-white shadow-card;
+  }
+  .table {
+    @apply min-w-full divide-y divide-slate-100 text-sm;
+  }
+  .table thead {
+    @apply bg-sk-mist/70 text-[11px] uppercase tracking-[0.08em] text-sk-muted;
+  }
+  .table th {
+    @apply px-4 py-3 text-left font-bold whitespace-nowrap;
+  }
+  .table td {
+    @apply px-4 py-3 align-middle text-sk-ink;
+  }
+  .table tbody tr {
+    @apply transition-colors hover:bg-sk-mist/60;
+  }
+  .link {
+    @apply text-brand-600 hover:text-brand-800 font-medium;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* ---------- ShopKart storefront design system ---------- */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+  user-select: none;
+  /* Guard: if the icon font fails to load, the ligature text must not
+     stretch the layout — clip it to roughly one glyph width. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1.4em;
+  overflow: hidden;
+  white-space: nowrap;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.material-symbols-outlined.fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+@layer base {
+  body {
+    @apply bg-sk-bg text-sk-ink font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Storefront section heading block: amber eyebrow + Jakarta H2 */
+  .sk-eyebrow {
+    @apply text-xs font-bold uppercase tracking-wider text-sk-primary;
+  }
+  .sk-eyebrow-danger {
+    @apply text-xs font-bold uppercase tracking-wider text-sk-danger;
+  }
+  .sk-h2 {
+    @apply font-display text-[26px] leading-[34px] font-bold text-sk-ink tracking-tight;
+  }
+  .sk-card {
+    @apply bg-white rounded-2xl shadow-card border border-sk-mist-2/60;
+  }
+  .sk-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sk-primary px-6 py-3 text-sm font-bold text-white shadow-md transition hover:bg-sk-primary-deep active:scale-95 disabled:opacity-60;
+  }
+  .sk-btn-mist {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-sk-mist-3 px-6 py-3 text-sm font-bold text-sk-primary transition hover:bg-sk-mist-2 active:scale-95 disabled:opacity-60;
+  }
+  .sk-chip {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold;
+  }
+}

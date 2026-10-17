@@ -1,0 +1,52 @@
+# Render Blueprint — ShopKart full-stack demo (100% free tier).
+# Usage: push this repo to GitHub → Render Dashboard → New → Blueprint → select repo.
+# Values marked sync:false will be prompted. See docs/DEPLOY_FREE.md for the full guide.
+services:
+  # ---------- Backend API (Node + Express + Socket.io) ----------
+  - type: web
+    name: shopkart-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      # --- Database: TiDB Cloud Serverless (free, MySQL-compatible) ---
+      - key: DB_HOST
+        sync: false # e.g. gateway01.ap-southeast-1.prod.aws.tidbcloud.com
+      - key: DB_PORT
+        value: 4000
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        value: ecommerce
+      - key: DB_SSL
+        value: true # TiDB Cloud requires TLS
+      # --- App secrets ---
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false # e.g. https://shopkart-store.onrender.com (set after first deploy)
+      - key: RAZORPAY_KEY_ID
+        sync: false # optional — use Razorpay TEST keys for the demo
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+  # ---------- Frontend (React + Vite static site) ----------
+  - type: web
+    name: shopkart-store
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    plan: free
+    envVars:
+      - key: VITE_API_URL
+        sync: false # e.g. https://shopkart-api.onrender.com/api (set after backend deploys)

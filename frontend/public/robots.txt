@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /account/
+Disallow: /search?
+
+# Dynamic sitemap is served by the backend — submit it in Search Console:
+# https://YOUR-DOMAIN/api/sitemap.xml
